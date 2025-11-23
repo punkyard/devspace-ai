@@ -1,0 +1,13 @@
+# macOS files
+.DS_Store
+
+# Node
+node_modules/
+
+# Local env
+.env
+
+# local resources not for commit
+ressources/
+TRASH/
+context/

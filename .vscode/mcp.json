@@ -1,0 +1,28 @@
+{
+  "inputs": [
+    {
+      "password": true,
+      "id": "brave-api-key",
+      "type": "promptString",
+      "description": "Brave Search API Key"
+    },
+    {
+      "password": true,
+      "id": "context7-api-key",
+      "type": "promptString",
+      "description": "Context7 API Key"
+    }
+  ],
+  "servers": {
+    "brave-search": {
+      "command": "npx",
+      "args": ["-y", "@brave/brave-search-mcp-server", "--transport", "stdio"],
+      "env": { "BRAVE_API_KEY": "${input:brave-api-key}" }
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp", "--transport", "stdio"],
+      "env": { "CONTEXT7_API_KEY": "${input:context7-api-key}" }
+    }
+  }
+}

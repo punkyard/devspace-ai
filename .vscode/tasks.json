@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "start",
+			"type": "shell",
+			"command": "cat",
+			"args": [".github/prompts/start.prompt.md"],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "none"
+		}
+	]
+}
