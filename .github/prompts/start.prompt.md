@@ -41,6 +41,21 @@
 
 **If scripts are not present yet,** proceed with inline commands (still with approval)
 
+**Git identity and initialization:**
+
+- If `git` is not configured on the machine, ask the user to set a global identity (this is used for commit authorship). Propose the following commands with placeholders and ask the user to confirm and replace with their details:
+
+```bash
+# set your global git identity (replace with your name/email)
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+# initialize the repository if it hasn't been already
+git init
+```
+
+Explain that these commands are safe to run and that `git init` will only create a new repository if one doesn't already exist
+
 ## F. Ask user to create API keys for MCP servers (B5)
 
 See section J. MCP usage rules
@@ -54,6 +69,7 @@ See section J. MCP usage rules
 ## G. Agent checklist (instructions for Copilot)
 
 1. ask the user for environment details (hostname, macOS version, CPU, RAM, preinstalled tools) and Git identity (GitHub handle and email); write or update `context/environment.md` with structured frontmatter and the captured values
+- if the user's git client is not configured, propose `git config --global` commands and `git init` for this repo and run them only after approval
 2. propose a dry-run of the installer script: show the exact command `zsh .github/scripts/git-nvm-node-install.sh --dry-run`, explain what it will do, and wait for approval; on approval run the script without `--dry-run`, report results, then mark the README item done and add a checked entry to the session file
 3. explain why a Brave-search API key is needed and provide the signup link; if the user prefers, show step-by-step instructions from `.github/instructions/mcp-bravesearch.instructions.md` and wait for confirmation when the key is created
 4. explain why a Context7 API key is useful and provide the signup link; reference `.github/instructions/mcp-context7.instructions.md` for exact steps and wait for confirmation when the key is created

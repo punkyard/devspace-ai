@@ -11,6 +11,12 @@
       "id": "context7-api-key",
       "type": "promptString",
       "description": "Context7 API Key"
+    },
+    {
+      "password": true,
+      "id": "github_token",
+      "type": "promptString",
+      "description": "GitHub personal access token"
     }
   ],
   "servers": {
@@ -23,6 +29,14 @@
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp", "--transport", "stdio"],
       "env": { "CONTEXT7_API_KEY": "${input:context7-api-key}" }
-    }
+    },
+    "github": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@modelcontextprotocol/server-github"
+			],
+			"env": { "GITHUB_PERSONAL_ACCESS_TOKEN": "${input:github_token}"}
+		}
   }
 }

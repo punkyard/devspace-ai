@@ -37,6 +37,7 @@ description: "Single source Copilot instructions. Keep short; do not include sec
 1. the canonical SSOT is this file: `.github/copilot-instructions.md`
 2. `.github/instructions/mcp.instructions.md` — General MCP server guidance and policies
 3. `.github/instructions/mcp-bravesearch.instructions.md` — Brave Search MCP install and config notes
+6. `.github/instructions/git.instructions.md` — Git workflow policy (branch strategy, commit rules, PR template)
 4. `.github/instructions/mcp-context7.instructions.md` — Context7 MCP install and quick usage notes
 5. `.github/instructions/ops.instructions.md` — Admin/ops notes (Copilot Metrics API, tokens, permissions)
 6. `.github/instructions/cli.instructions.md` — Copilot CLI allowlist / denylist guidance
