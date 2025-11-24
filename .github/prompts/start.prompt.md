@@ -10,7 +10,7 @@
 ### A2. step engine
 
 - load README tasks as the source of truth
-  - on `/start`, parse the README checklist into a Copilot-managed to-do list (built-in). Create a session file `context/YYYYMMDD-todo.md` with structured frontmatter and an itemized list; use this built-in to drive the agent's step engine so each suggested action corresponds to a README task
+  - on `/start`, propose parsing the README checklist into a Copilot-managed to-do list (built-in). Generate and show a preview of the `context/YYYYMMDD-todo.md` file content and only create the file after the user explicitly approves the preview. Use this built-in to drive the agent's step engine after approval so each suggested action corresponds to a README task
 - infer missing info; ask the user to confirm or provide it
 - propose the minimal next action and show exact `zsh` commands in a short code block
 - wait for explicit approval; then run command in Terminal and report results
@@ -73,7 +73,7 @@ See section J. MCP usage rules
 
 ## G. Agent checklist (instructions for Copilot)
 
-0. on `/start`, parse the README checklist and create a Copilot-managed built-in to-do list; write `context/YYYYMMDD-todo.md` with a copy of the checklist and structured frontmatter. Use this built-in to keep track of progress and to propose the next action. Mark items as done in the session file as you complete them.
+0. on `/start`, propose parsing the README checklist and create a preview of a Copilot-managed built-in to-do list (for example `context/YYYYMMDD-todo.md`) including a copy of the checklist and structured frontmatter. Do NOT create files (including `context` files) or run any scripts without the user's explicit approval. After user approval, write the approved `context/YYYYMMDD-todo.md` and use it to keep track of progress and propose the next action; mark items as done in the session file as you complete them.
 1. ask the user to answer all questions in `context/environment.md` (host, OS, RAM, preinstalled, GitHub handle & email); write or update `context/environment.md` with structured frontmatter. After the user confirms the values, Copilot will propose, and run (on user approval), `git config --global user.name` and `git config --global user.email` with the captured values, and `git init` if needed.
 2. propose a dry-run of the installer script: show the exact command `zsh .github/scripts/git-nvm-node-install.sh --dry-run`, explain what it will do, and wait for approval; on approval run the script without `--dry-run`, report results, then mark the README item done and add a checked entry to the session file
 3. explain why a Brave-search API key is needed and provide the signup link; if the user prefers, show step-by-step instructions from `.github/instructions/mcp-bravesearch.instructions.md` and wait for confirmation when the key is created
