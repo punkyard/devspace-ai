@@ -25,7 +25,7 @@ Notes:
 
 How to enable:
 1. Copy the sample into `.github/automation-enabled` and set `enabled: true`.
-2. Add the exact script(s) to `allowed-scripts` (e.g., `.github/scripts/generate_context_files.py`).
+2. Add the exact script(s) to `allowed-scripts` (e.g., `.github/scripts/generate_context_files.py`). If a referenced script does not exist in the repository, either add the intended automation script under `.github/scripts/` or remove the entry — the file must accurately reflect allowed scripts.
 3. Add a line for `owners` containing the maintainers that must approve automation for the project.
 4. Update documentation in `.github/instructions/` to explain each script's purpose, flags, and required approval process.
 
