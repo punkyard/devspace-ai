@@ -56,17 +56,17 @@ refactor(app): extract markdown processing into separate module
 
 - Purpose: create a precise, timestamped synthesis of the conversation that led to a commit and store it in `context/` alongside the code change. This provides clear traceability between code changes and the conversational decisions that motivated them.
 - Rule: Every commit should include one conversation transcript file and one synthesis file in the `context/` folder. Both files must share the same base name and creation timestamp so they can be paired together. Do not rename files after creation; instead, record modifications with an `updated:` field in the frontmatter.
-- Naming convention: use an ISO-like timestamp and a short hyphenated summary for the filename: `YYYYMMDDTHHMMSSZ-brief-summary-(conversation|synthesis).md` where `YYYYMMDDTHHMMSSZ` is the creation timestamp in UTC (e.g., `20251124T164530Z`), and `brief-summary` is 1–6 words slugified (lowercase, hyphens only).
-- Timestamp source: prefer calling the repository's Model Context Protocol (time MCP) to generate a canonical creation timestamp for consistency across MCP actions. If the time MCP is unavailable, use the system UTC time as a fallback (`date -u +%Y%m%dT%H%M%SZ`).
+-- Naming convention: use an ISO-like date (YYYYMMDD) and a short hyphenated summary for the filename: `YYYYMMDD-brief-summary-(conversation|synthesis).md` where `YYYYMMDD` is the creation date in UTC (e.g., `20251124`), and `brief-summary` is 1–6 words slugified (lowercase, hyphens only). Use date-only stamps (no hours/minutes).
+-- Timestamp source: prefer calling the repository's Model Context Protocol (time MCP) to generate a canonical creation date for consistency across MCP actions. If the time MCP is unavailable, use the system UTC date as a fallback (`date -u +%Y%m%d`).
 - Content & frontmatter: each file should include YAML frontmatter with at least these keys:
-	- `created`: the creation timestamp (do not change on later edits)
+	- `created`: the creation date (YYYYMMDD, do not change on later edits)
 	- `conversation_id`: the base filename (e.g., `20251124T164530Z-initial-setup`)
 	- `summary`: short sentence (1–2 lines) describing the conversation or synthesis
 	- `commit`: short commit SHA the conversation/synthesis relates to
 	- `safe-to-push`: `false` by default unless the content is confirmed for remote sharing
-	- `updated`: (optional) a list of UTC timestamps when the file was modified. Do not use this to change the filename or created timestamp.
+	- `updated`: (optional) a list of UTC dates (YYYYMMDD) when the file was modified. Do not use this to change the filename or created date.
 
-- Preservation rule: filenames must retain the creation timestamp and slug. When the conversation or synthesis is edited, do not rename the file. Instead, add an `updated:` entry in the frontmatter and append a short note with the change in the file body.
+- Preservation rule: filenames must retain the creation date and slug. When the conversation or synthesis is edited, do not rename the file (this includes the Copilot chat history listing name for the conversation). Instead, add an `updated:` entry in the frontmatter and append a short note with the change in the file body.
 
 - Example filename pair:
 	- `context/20251124T164530Z-initial-setup-conversation.md`
@@ -76,9 +76,9 @@ refactor(app): extract markdown processing into separate module
 
 ```bash
 # preferred: use time MCP to generate canonical UTC timestamp; if not available fallback to date
-timestamp=$(npx mcp_time_get_current_time --timezone UTC 2>/dev/null || date -u +%Y%m%dT%H%M%SZ)
+timestamp=$(npx mcp_time_get_current_time --timezone UTC --format YYYYMMDD 2>/dev/null || date -u +%Y%m%d)
 summary="initial-setup" # short summary used to form file slug; sanitize as needed
-slug=$(echo "$summary" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/-\{2,\}/-/g' | sed 's/^-\|-$//g')
+slug=$(echo "$summary" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 's/-\{2,\}/-/g' | sed 's/^\-\|\-$//g')
 base="${timestamp}-${slug}"
 convo="context/${base}-conversation.md"
 synth="context/${base}-synthesis.md"
@@ -86,7 +86,7 @@ synth="context/${base}-synthesis.md"
 # conversation transcript
 cat > "$convo" <<EOF
 ---
-created: $timestamp
+	created: $timestamp
 conversation_id: $base
 summary: "Short conversation description"
 commit: $(git rev-parse --short HEAD || echo "<pending>")
@@ -99,7 +99,7 @@ EOF
 # synthesis
 cat > "$synth" <<EOF
 ---
-created: $timestamp
+	created: $timestamp
 conversation_id: $base
 summary: "Short synthesis summary"
 commit: $(git rev-parse --short HEAD || echo "<pending>")

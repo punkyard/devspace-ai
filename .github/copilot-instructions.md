@@ -1,6 +1,8 @@
 ---
 applyTo: "**"
 description: "Single source Copilot instructions. Keep short; do not include secrets."
+---
+# 📋 Repository Copilot instructions — single source of truth (SSOT)
 Last updated 2025-11-24
 
 ## A. Purpose
@@ -63,6 +65,7 @@ Last updated 2025-11-24
 - maintain a persistent checklist in the session file for actions to take — check items when done; do not delete completed items
 - always return to `.github/prompts/start.prompt.md` after each step and continue until the README checklist is complete
 - use frontmatter to describe document purpose and metadata (e.g., `safe-to-push: true|false`)
+- preserve conversation & synthesis file names: do not rename conversation or synthesis files after creation — use the `updated` field in frontmatter for edits and keep the original created date. The Copilot chat UI listing should also keep the original conversation name (based on `conversation_id`) — do not rename the conversation in the chat UI when editing its contents.
 - to start the guided setup, the user types `/start` in the Copilot chat — this triggers `.github/prompts/start.prompt.md` and begins the `README.md` checklist-driven workflow
 
 ## H. 🔒 Editing safety rules

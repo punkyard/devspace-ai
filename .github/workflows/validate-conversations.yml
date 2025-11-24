@@ -1,0 +1,24 @@
+name: Validate context conversation files
+
+on:
+  push:
+    paths:
+      - 'context/**'
+  pull_request:
+    paths:
+      - 'context/**'
+
+jobs:
+  validate-context:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install pyyaml
+      - name: Run context validation
+        run: |
+          python .github/scripts/validate_context_files.py
