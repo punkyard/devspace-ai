@@ -66,6 +66,20 @@ Last updated 2025-11-24
 - always return to `.github/prompts/start.prompt.md` after each step and continue until the README checklist is complete
 - use frontmatter to describe document purpose and metadata (e.g., `safe-to-push: true|false`)
 - preserve conversation & synthesis file names: do not rename conversation or synthesis files after creation — use the `updated` field in frontmatter for edits and keep the original created date. The Copilot chat UI listing should also keep the original conversation name (based on `conversation_id`) — do not rename the conversation in the chat UI when editing its contents.
+- built-in to-do list: when Copilot starts a session (e.g., on `/start`), it MUST parse the README checklist into a built-in to-do list and create a session file in `context/` named `YYYYMMDD-todo.md` with frontmatter (`created`, `session_id`, `summary`, `items`) and an itemized list. Use this built-in list as the authoritative work queue; on completion of each item, mark it as done in both the session file and the README.
+- built-in to-do file format (suggested):
+```
+---
+created: 20251124
+session_id: 20251124-initial-setup
+summary: "initial setup run for devspace-ai"
+items:
+	- [ ] install-homebrew
+	- [ ] install-visual-studio-code
+	- [ ] clone-repo
+	- [ ] configure-git
+---
+```
 - to start the guided setup, the user types `/start` in the Copilot chat — this triggers `.github/prompts/start.prompt.md` and begins the `README.md` checklist-driven workflow
 
 ## H. 🔒 Editing safety rules

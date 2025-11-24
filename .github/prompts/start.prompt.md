@@ -10,6 +10,7 @@
 ### A2. step engine
 
 - load README tasks as the source of truth
+  - on `/start`, parse the README checklist into a Copilot-managed to-do list (built-in). Create a session file `context/YYYYMMDD-todo.md` with structured frontmatter and an itemized list; use this built-in to drive the agent's step engine so each suggested action corresponds to a README task
 - infer missing info; ask the user to confirm or provide it
 - propose the minimal next action and show exact `zsh` commands in a short code block
 - wait for explicit approval; then run command in Terminal and report results
@@ -41,6 +42,10 @@
 
 **If scripts are not present yet,** proceed with inline commands (still with approval)
 
+**Time MCP & other servers**
+
+- before using the MCP time generator, start the `time` MCP (defined in `.vscode/mcp.json` as `uvx mcp-server-time`) and verify it's running; this is used as the canonical source for timestamping. If `uvx` is not authorized or available on the host, use `date -u +%Y%m%d` as fallback.
+
 **Git identity and initialization:**
 
 - Copilot asks the user to answer all questions in `context/environment.md` (host, OS, RAM, preinstalled, GitHub username, account email). After the user provides and confirms these values, Copilot will propose and, after explicit approval, run the following commands to set the global git identity and initialize the repo if needed:
@@ -68,12 +73,14 @@ See section J. MCP usage rules
 
 ## G. Agent checklist (instructions for Copilot)
 
+0. on `/start`, parse the README checklist and create a Copilot-managed built-in to-do list; write `context/YYYYMMDD-todo.md` with a copy of the checklist and structured frontmatter. Use this built-in to keep track of progress and to propose the next action. Mark items as done in the session file as you complete them.
 1. ask the user to answer all questions in `context/environment.md` (host, OS, RAM, preinstalled, GitHub handle & email); write or update `context/environment.md` with structured frontmatter. After the user confirms the values, Copilot will propose, and run (on user approval), `git config --global user.name` and `git config --global user.email` with the captured values, and `git init` if needed.
 2. propose a dry-run of the installer script: show the exact command `zsh .github/scripts/git-nvm-node-install.sh --dry-run`, explain what it will do, and wait for approval; on approval run the script without `--dry-run`, report results, then mark the README item done and add a checked entry to the session file
 3. explain why a Brave-search API key is needed and provide the signup link; if the user prefers, show step-by-step instructions from `.github/instructions/mcp-bravesearch.instructions.md` and wait for confirmation when the key is created
 4. explain why a Context7 API key is useful and provide the signup link; reference `.github/instructions/mcp-context7.instructions.md` for exact steps and wait for confirmation when the key is created
 5. start the Brave Search MCP (use the `npx` command defined in `.vscode/mcp.json`), verify the MCP inspector detects it, and report the status to the user; if it fails, show troubleshooting steps and next actions
 6. start the Context7 MCP (use the `npx` command defined in `.vscode/mcp.json`), verify the MCP inspector detects it, and report the status to the user
+7. start the `time` MCP (use the `uvx` or MCP time server command in `.vscode/mcp.json`) to generate canonical dates for conversation/synthesis creation; verify it with MCP inspector and prefer it for timestamps for the entire session.
 7. create an initial session note `context/YYYYMMDD-initial-setup.md` that synthesises the steps taken so far; include timestamps, commands run, and key outputs; add the file and mark it in the session checklist (see section G. session files — synthesis rule)
 8. ask the user whether they prefer a hosted model or a local Ollama model; if local is chosen, propose `zsh .github/scripts/ollama-install.sh --dry-run`, explain implications, and assist with installing/choosing a model
 9. run a simple test prompt with the chosen model (example: user says "hello"), capture the response, and save a short transcript in the session note
