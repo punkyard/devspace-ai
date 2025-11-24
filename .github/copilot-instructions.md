@@ -67,18 +67,10 @@ Last updated 2025-11-24
 - always return to `.github/prompts/start.prompt.md` after each step and continue until the README checklist is complete
 - use frontmatter to describe document purpose and metadata (e.g., `safe-to-push: true|false`)
 - preserve conversation & synthesis file names: do not rename conversation or synthesis files after creation — use the `updated` field in frontmatter for edits and keep the original created date. The Copilot chat UI listing should also keep the original conversation name (based on `conversation_id`) — do not rename the conversation in the chat UI when editing its contents.
-- Auto-generation policy: Copilot and automation scripts MUST NOT create or modify repository files (including session files in `context/`) without explicit user approval. Any automated file creation is considered an opt-in feature and must be enabled explicitly by repository maintainers. The default policy is manual creation only. If repository maintainers opt-in to automation, they must document the automation mechanism, the exact commands and scripts, and add a repository-level opt-in marker (e.g., `.github/automation-enabled`) that lists the allowed automation scripts and owners. 
-Example opt-in marker (opt-in required by maintainers):
-```
-.github/automation-enabled:
-enabled: true
-allowed-scripts:
-	- .github/scripts/*
-owners:
-	- <maintainer-github-handle>
-```
-- built-in to-do list: when Copilot starts a session (e.g., on `/start`), it MUST parse the README checklist into a built-in to-do list and create a session file in `context/` named `YYYYMMDD-todo.md` with frontmatter (`created`, `session_id`, `summary`, `items`) and an itemized list. Use this built-in list as the authoritative work queue; on completion of each item, mark it as done in both the session file and the README.
-- built-in to-do file format (suggested):
+ Auto-generation policy: Copilot and automation scripts MUST NOT create or modify repository files (including session files in `context/`) without explicit user approval. Any automated file creation is considered an opt-in feature and must be enabled explicitly by repository maintainers. The default policy is manual creation only. If repository maintainers opt-in to automation, they must document the automation mechanism, the exact commands and scripts, and add a repository-level opt-in marker (e.g., `.github/automation-enabled`) that lists the allowed automation scripts and owners. See `.github/instructions/context.instructions.md` for a sample opt-in marker and guidelines.
+Example opt-in marker / see sample in `.github/instructions/context.instructions.md`:
+- built-in to-do: when Copilot starts a session (e.g., on `/start`), it MUST parse the README checklist and present it to the user using VS Code's built-in todo features (Problems/Tasks or a TODO extension) or an in-editor Copilot checklist. Copilot should show a preview and request explicit approval before creating a session file under `context/` to persist the to-do list. The VS Code built-in list is the authoritative work queue unless the user asks to persist it.
+- optional session note format (created only after explicit approval): Copilot may save the checklist as a session file in `context/` named `YYYYMMDD-<short-summary>-todo.md` with frontmatter (`created`, `session_id`, `summary`, `items`).
 ```
 ---
 created: 20251124
