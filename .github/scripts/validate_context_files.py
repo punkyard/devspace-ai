@@ -15,6 +15,7 @@ import re
 from glob import glob
 from pathlib import Path
 import yaml
+import argparse
 
 ROOT = Path(__file__).resolve().parents[2]
 CONTEXT = ROOT / "context"
@@ -23,6 +24,10 @@ FILENAME_RE = re.compile(r"^(?P<date>\d{8})-(?P<slug>[a-z0-9-]+)-(?P<kind>conver
 DATE_RE = re.compile(r"^\d{8}$")
 
 errors = []
+
+parser = argparse.ArgumentParser(description='Validate context conversation and synthesis files')
+parser.add_argument('--ensure-todo', action='store_true', help='ensure a context YYYYMMDD-todo.md exists')
+args = parser.parse_args()
 
 files = [Path(p) for p in glob(str(CONTEXT / "*-conversation.md"))] + [Path(p) for p in glob(str(CONTEXT / "*-synthesis.md"))]
 
@@ -87,10 +92,38 @@ for f in files:
     # remember base kinds
     bases.setdefault(base, set()).add(kind)
 
-# ensure pairs
+errors += []
 for base, kinds in bases.items():
     if 'conversation' not in kinds or 'synthesis' not in kinds:
         errors.append(f"Missing pair for base {base}: found kinds {sorted(list(kinds))}")
+
+if args.ensure_todo:
+    # check for todo files
+    todos = [Path(p) for p in glob(str(CONTEXT / "*-todo.md"))]
+    if not todos:
+        errors.append("No context/*-todo.md file found (build-in todo file missing)")
+    else:
+        for todo in todos:
+            name = todo.name
+            m = re.match(r"^(?P<date>\d{8})-.*-todo\.md$", name)
+            if not m:
+                errors.append(f"Invalid todo filename: {name} - must match YYYYMMDD-*-todo.md")
+            else:
+                date = m.group('date')
+                with open(todo, 'r', encoding='utf-8') as fh:
+                    content = fh.read()
+                if content.startswith("---"):
+                    try:
+                        parts = content.split('---', 2)
+                        fm = yaml.safe_load(parts[1]) or {}
+                    except Exception as e:
+                        errors.append(f"{name}: invalid frontmatter YAML: {e}")
+                        continue
+                    created = fm.get('created')
+                    if not created:
+                        errors.append(f"{name}: frontmatter 'created' missing")
+                    elif str(created) != date:
+                        errors.append(f"{name}: 'created' date {created} does not match filename date {date}")
 
 if errors:
     for e in errors:

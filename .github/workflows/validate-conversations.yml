@@ -19,6 +19,9 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: python -m pip install pyyaml
-      - name: Run context validation
+      - name: Run context validation (conversation/synthesis)
         run: |
           python .github/scripts/validate_context_files.py
+      - name: Ensure README todo exists
+        run: |
+          python .github/scripts/validate_context_files.py --ensure-todo
