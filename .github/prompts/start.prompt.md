@@ -43,18 +43,18 @@
 
 **Git identity and initialization:**
 
-- If `git` is not configured on the machine, ask the user to set a global identity (this is used for commit authorship). Propose the following commands with placeholders and ask the user to confirm and replace with their details:
+- Copilot asks the user to answer all questions in `context/environment.md` (host, OS, RAM, preinstalled, GitHub username, account email). After the user provides and confirms these values, Copilot will propose and, after explicit approval, run the following commands to set the global git identity and initialize the repo if needed:
 
 ```bash
-# set your global git identity (replace with your name/email)
-git config --global user.name "Your Name"
-git config --global user.email "you@example.com"
+# set (on the user's machine) the global git identity with captured values
+git config --global user.name "<captured-name>"
+git config --global user.email "<captured-email>"
 
 # initialize the repository if it hasn't been already
 git init
 ```
 
-Explain that these commands are safe to run and that `git init` will only create a new repository if one doesn't already exist
+Copilot will explain that these commands are safe to run and that `git init` will only create a new repository if one doesn't already exist. Copilot will never write the user's private credentials into this repository or commit them to Git.
 
 ## F. Ask user to create API keys for MCP servers (B5)
 
@@ -68,8 +68,7 @@ See section J. MCP usage rules
 
 ## G. Agent checklist (instructions for Copilot)
 
-1. ask the user for environment details (hostname, macOS version, CPU, RAM, preinstalled tools) and Git identity (GitHub handle and email); write or update `context/environment.md` with structured frontmatter and the captured values
-- if the user's git client is not configured, propose `git config --global` commands and `git init` for this repo and run them only after approval
+1. ask the user to answer all questions in `context/environment.md` (host, OS, RAM, preinstalled, GitHub handle & email); write or update `context/environment.md` with structured frontmatter. After the user confirms the values, Copilot will propose, and run (on user approval), `git config --global user.name` and `git config --global user.email` with the captured values, and `git init` if needed.
 2. propose a dry-run of the installer script: show the exact command `zsh .github/scripts/git-nvm-node-install.sh --dry-run`, explain what it will do, and wait for approval; on approval run the script without `--dry-run`, report results, then mark the README item done and add a checked entry to the session file
 3. explain why a Brave-search API key is needed and provide the signup link; if the user prefers, show step-by-step instructions from `.github/instructions/mcp-bravesearch.instructions.md` and wait for confirmation when the key is created
 4. explain why a Context7 API key is useful and provide the signup link; reference `.github/instructions/mcp-context7.instructions.md` for exact steps and wait for confirmation when the key is created
@@ -126,4 +125,4 @@ Ask the user: prefer hosted Copilot models (Claude/GPT family) or a local model 
 - guide them to `.github/instructions/ollama.instructions.md`
 - propose `zsh .github/scripts/ollama-install.sh --dry-run`, then (on approval) run without `--dry-run`
 
-> print "🚀 prompt" in chat box each time you read this file
+> print "🚀 start" in chat box each time you read this file
