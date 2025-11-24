@@ -1,9 +1,7 @@
 ---
 applyTo: "**"
 description: "Single source Copilot instructions. Keep short; do not include secrets."
-updated: 2025-11-24
----
-# 📋 Repository Copilot instructions — single source of truth (SSOT)
+Last updated 2025-11-24
 
 ## A. Purpose
 
