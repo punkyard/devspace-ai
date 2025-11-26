@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "github.copilot",
+    "github.copilot-chat",
+    "ms-vscode.vscode-typescript-next",
+    "lakshits11.best-themes-redefined",
+    "pkief.material-icon-theme",
+    "ritwickdey.liveserver",
+    "ms-vscode.live-server",
+    "yzhang.markdown-checkbox",
+    "tomoki1207.pdf"
+  ],
+  "unwantedRecommendations": []
+}
