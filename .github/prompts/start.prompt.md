@@ -71,22 +71,27 @@ See section J. MCP usage rules
   - `.github/instructions/mcp-context7.instructions.md` (Context7)
 - for code-generation that needs docs: first `use context7` to fetch docs, then generate code
 
+VS Code automatically starts MCP servers from `.vscode/mcp.json` when Copilot needs them
+In order to test MCP servers, Copilot must invite user to:
+- choose a city in the world, and Copilot uses time server to tell the time in this city
+- choose a desert and Copilot uses Brave Search to find info about it
+- choose a programming library and Copilot uses Context7 to fetch its docs
+
 ## G. Agent checklist (instructions for Copilot)
 
-0. on `/start`, propose parsing the README checklist and present a VS Code built-in to-do. Do NOT create files (including `context` files) or run any scripts without the user's explicit approval. If the user explicitly approves persisting the to-do as a session file, show a preview of the `context/YYYYMMDD-<short-summary>-todo.md` and only write it after user approval. Use the built-in to-do to keep track of progress and propose next actions; mark items as done in the session file and optionally update README after approval.
+0. on `/start`, propose parsing the README checklist and present a VS Code built-in to-do. Do NOT create files (except `context` files) or run any scripts without the user's explicit approval. If the user explicitly approves persisting the to-do as a session file, show a preview of the `context/YYYYMMDD-<short-summary>-todo.md` and only write it after user approval. Use the built-in to-do to keep track of progress and propose next actions; mark items as done in the session file and optionally update README after approval.
 1. ask the user to answer all questions in `context/environment.md` (host, OS, RAM, preinstalled, GitHub handle & email); write or update `context/environment.md` with structured frontmatter. After the user confirms the values, Copilot will propose, and run (on user approval), `git config --global user.name` and `git config --global user.email` with the captured values, and `git init` if needed.
 2. propose a dry-run of the installer script: show the exact command `zsh .github/scripts/git-nvm-node-install.sh --dry-run`, explain what it will do, and wait for approval; on approval run the script without `--dry-run`, report results, then mark the README item done and add a checked entry to the session file
 3. explain why a Brave-search API key is needed and provide the signup link; if the user prefers, show step-by-step instructions from `.github/instructions/mcp-bravesearch.instructions.md` and wait for confirmation when the key is created
 4. explain why a Context7 API key is useful and provide the signup link; reference `.github/instructions/mcp-context7.instructions.md` for exact steps and wait for confirmation when the key is created
-5. start the Brave Search MCP (use the `npx` command defined in `.vscode/mcp.json`), verify the MCP inspector detects it, and report the status to the user; if it fails, show troubleshooting steps and next actions
-6. start the Context7 MCP (use the `npx` command defined in `.vscode/mcp.json`), verify the MCP inspector detects it, and report the status to the user
-7. start the `time` MCP (use the `uvx` or MCP time server command in `.vscode/mcp.json`) to generate canonical dates for conversation/synthesis creation; verify it with MCP inspector and prefer it for timestamps for the entire session.
+5. verify MCP servers are configured in `.vscode/mcp.json`: time (uvx mcp-server-time), brave-search (npx @brave/brave-search-mcp-server), context7 (npx @upstash/context7-mcp). When Copilot uses these MCP tools (like `mcp_brave-search_brave_web_search` or `mcp_context7_get-library-docs`), VS Code automatically starts the servers and prompts for API keys via the secure input system defined in mcp.json. No manual start or script is needed.
+6. test each MCP server by using it: call `mcp_time_get_current_time` to verify the time server, `mcp_brave-search_brave_web_search` to test Brave Search, and `mcp_context7_resolve-library-id` to test Context7. Report results to the user.
 7. create an initial session note `context/YYYYMMDD-initial-setup.md` that synthesises the steps taken so far; include timestamps, commands run, and key outputs; add the file and mark it in the session checklist (see section G. session files — synthesis rule)
 8. ask the user whether they prefer a hosted model or a local Ollama model; if local is chosen, propose `zsh .github/scripts/ollama-install.sh --dry-run`, explain implications, and assist with installing/choosing a model
 9. run a simple test prompt with the chosen model (example: user says "hello"), capture the response, and save a short transcript in the session note
 10. ask the user to confirm that the procedure is complete; on confirmation, mark the README item done and add a checked entry in the session file
 11. offer to clean temporary or example files (propose exact `rm -f` commands for any files to remove); run removals only after explicit approval and record actions in the session note
-12. present the recommended extensions from `.vscode/extensions.json` and offer to install them (show the install commands or a link to the Extensions view); on approval, mark the item done
+12. guide the user to install recommended VS Code extensions from `.vscode/extensions.json`: explain that VS Code will show a notification to install recommended extensions, or the user can open the Extensions view (`Cmd+Shift+X`), type `@recommended`, and install them. On approval, mark the item done
 
 ## H. Closing
 
