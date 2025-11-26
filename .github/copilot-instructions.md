@@ -36,17 +36,24 @@ Last updated 2025-11-24
 ## E. 📂 Index of files (canonical workspace structure)
 
 - the canonical SSOT is this file: `.github/copilot-instructions.md`
-- `.github/instructions/mcp.instructions.md` — General MCP server guidance and policies
+- `.github/instructions/mcp.instructions.md` — general MCP server guidance and policies
+- `.github/instructions/mcp-time.instructions.md` — Time MCP install and usage notes for canonical timestamps
 - `.github/instructions/mcp-bravesearch.instructions.md` — Brave Search MCP install and config notes
-- `.github/instructions/git.instructions.md` — Git workflow policy (branch strategy, commit rules, PR template)
 - `.github/instructions/mcp-context7.instructions.md` — Context7 MCP install and quick usage notes
-- `.github/instructions/ops.instructions.md` — Admin/ops notes (Copilot Metrics API, tokens, permissions)
+- `.github/instructions/mcp-github.instructions.md` — GitHub MCP install and usage notes
+- `.github/instructions/git.instructions.md` — Git workflow policy (branch strategy, commit rules, PR template)
+- `.github/instructions/context.instructions.md` — project context and coding guidelines, automation opt-in
+- `.github/instructions/ops.instructions.md` — admin/ops notes (Copilot Metrics API, tokens, permissions)
 - `.github/instructions/cli.instructions.md` — Copilot CLI allowlist / denylist guidance
-- `.github/instructions/ollama.instructions.md` — Local LLM instructions (Ollama / Continue / LM Studio notes)
-- `.vscode/extensions.json` — Recommended VS Code extensions for this workspace
+- `.github/instructions/ollama.instructions.md` — local LLM instructions (Ollama / Continue / LM Studio notes)
+- `.github/prompts/start.prompt.md` — guided setup workflow for `/start` command
+- `.vscode/extensions.json` — recommended VS Code extensions for this workspace
 - `.vscode/mcp.json` — MCP server definitions for VS Code (prompts for API keys, NPX/Docker templates)
-- `/context/` — Session synthesised notes directory (local-first; files named `YYYYMMDD-title.md`)
-- `README.md` — Repository description; Quickstart and checklist to prepare a Mac for development
+- `.vscode/tasks.json` — VS Code tasks
+- `/context/` — session synthesised notes directory (local-first; files named `YYYYMMDD-title.md`)
+- `/context/environment.md` — user environment metadata (host, OS, RAM, GitHub handle, email)
+- `README.md` — repository description; quickstart and checklist to prepare a Mac for development
+- `docs/ALIRE.md` — French version of README
 
 ## F. 💬 User communication rules (how to speak and work with the user)
 
@@ -59,6 +66,16 @@ Last updated 2025-11-24
 - keep session notes in `/context/` and do not push them unless `safe-to-push: true` appears in the file header
 - README is the primary user-facing guide — files in subfolders exist to support Copilot's activity
 - Copilot proposes actions and executes them after explicit approval — never instruct the user to run commands or take actions without asking to do it for them first, then ask for confirmation or missing info
+
+### F1. 🎯 Tone and manner of speech
+
+- synthesize answers: avoid repetition, keep responses compact and direct
+- always answer every question the user asks — no question should be ignored or deferred
+- add user questions and inquiries to the todo list as tasks to track
+- maintain a running list of tasks, inquiries, and plans throughout the session
+- use emojis extensively for clarity, emphasis, and visual appeal (e.g., ✅ 🚀 📋 ⚡ 🔧)
+- never tell the user what to do — instead, suggest the next actions Copilot could accomplish and ask for approval
+- frame next steps as: "I can [action] for you — should I proceed?" instead of "You should [action]"
 
 ## G. 📄 Session files — synthesis rule
 
