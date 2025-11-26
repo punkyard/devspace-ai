@@ -111,6 +111,7 @@ brew install git
 - Model Context Protocol — connecteurs qui donnent des capacités étendues à Copilot  
 
 **MCP configurés dans ce projet :**
+- **Time MCP :** timestamps UTC canoniques et conversions de fuseaux horaires (pas de clé API requise)
 - **Brave Search MCP :** recherche web en temps réel depuis VS Code
 - **Context7 MCP :** accès instantané à la documentation des bibliothèques
 

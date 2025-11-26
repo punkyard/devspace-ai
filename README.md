@@ -113,6 +113,7 @@ brew install git
 **In practice:** ask Copilot a question, it searches the web for the answer and explains it to you — no tab-switching needed
 
 **MCP servers configured in this project:**
+- **Time MCP:** canonical UTC timestamps and timezone conversions (no API key required)
 - **Brave Search MCP:** real-time web search from VS Code
 - **Context7 MCP:** instant access to documentation for libraries and frameworks
 
