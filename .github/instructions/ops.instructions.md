@@ -1,3 +1,7 @@
+---
+applyTo: '**'
+description: "Ops and admin instructions for Copilot Metrics and safe pushes"
+---
 # 🔧 Ops instructions (admin)
 
 This file explains admin operations such as Copilot Metrics API usage and token scopes.

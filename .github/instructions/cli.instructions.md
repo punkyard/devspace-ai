@@ -1,3 +1,7 @@
+---
+applyTo: '**'
+description: "Copilot CLI allowlist/denylist guidance for safe command execution"
+---
 # 🔐 Copilot CLI allowlist / denylist guidance
 
 Keep a curated `--allow-tool` pattern for Copilot CLI to reduce risk. Examples:

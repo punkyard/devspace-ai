@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-set -e
-
-# generate built-in context files (todo, conversation & synthesis) from README
-python3 .github/scripts/generate_context_files.py || true
-
-# keep going with other checks (e.g., lint, tests)
-exit 0

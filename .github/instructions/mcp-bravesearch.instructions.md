@@ -1,3 +1,7 @@
+# ---
+applyTo: '**'
+description: "Brave Search MCP install and usage notes; use for web search, news, images, video and summarizer"
+---
 # 🔍 Brave Search MCP — install & usage (draft)
 
 This file documents how to install and run the Brave Search MCP server for use as an MCP in editors and agents.

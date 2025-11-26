@@ -20,6 +20,10 @@
     }
   ],
   "servers": {
+    "time": {
+      "command": "uvx",
+      "args": ["mcp-server-time", "--local-timezone", "Europe/Paris"]
+    },
     "brave-search": {
       "command": "npx",
       "args": ["-y", "@brave/brave-search-mcp-server", "--transport", "stdio"],
