@@ -201,8 +201,7 @@ brew install git
 
 <div align="center">
 
-Licence : GNU Affero General Public License v3 (AGPLv3) — voir [LICENSE](../LICENSE)
-</br>
+GNU Affero General Public License v3 (AGPLv3) — voir [LICENSE](./LICENSE-FR.md)</br>
 
 réalisé avec ⏳ par <a href="https://github.com/punkyard">punkyard</a>
 
