@@ -190,6 +190,25 @@ brew install git
 - **canonical docs:** all Copilot rules live in `.github/` folder (the Single Source of Truth)
 - **file structure:** folder structure and instruction files are indexed in `.github/copilot-instructions.md`
 
+### social preview not visible in Settings?
+
+- if you do not see the "social preview" section in the repository Settings, check the following:
+   - verify you have repository admin permissions (only admins can set the social preview)
+   - check if the repo is private; social preview images are shared from public repositories only — a private repo that never had an image may not expose the UI
+   - for organization-owned repos, your organization may restrict this setting via admin policy
+   - if you cannot find "Settings" in the header, click the "More" dropdown and look for Settings
+- if the UI still doesn't show social preview but you want to add an image, a fallback is to add an `assets/social-preview.png` in a PR for the repo and then have a repo admin upload the same image via Settings → Social preview
+- verify the Open Graph image (og:image) with GraphQL `openGraphImageUrl`:
+
+```bash
+gh api graphql -f query='query { repository(owner:"punkyard", name:"devspace-ai"){ openGraphImageUrl } }'
+```
+
+   - the returned url is the image GitHub uses for social previews and topic thumbnails
+   - if empty or pointing at the owner's avatar, the repo doesn't have a social preview set
+
+Note: currently, there is no public API to programmatically set a social preview image — it must be uploaded manually via the repository Settings UI
+
 <div align="center">
 
 ## 🐛 Found an issue?
