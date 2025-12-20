@@ -1,7 +1,7 @@
 ---
 safe-to-push: false
 purpose: canonical environment metadata used by README and copilot-instructions.md
-updated: 2025-11-24
+modified: 2025-12-20
 ---
 # environment metadata
 
